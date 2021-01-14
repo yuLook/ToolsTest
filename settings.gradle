@@ -1,0 +1,5 @@
+include ':module_ucrop'
+include ':module_picture'
+include ':tools'
+include ':app'
+rootProject.name = "ToolsTest"

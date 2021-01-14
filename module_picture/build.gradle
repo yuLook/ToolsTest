@@ -1,0 +1,60 @@
+apply plugin: 'com.android.library'
+apply plugin: 'maven'
+
+android {
+    compileSdkVersion 29
+
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 29
+        versionCode 1
+        versionName "2.5.9"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    lintOptions {
+        abortOnError false
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "androidx.appcompat:appcompat:1.2.0"
+    implementation "androidx.concurrent:concurrent-futures:1.1.0"
+    implementation "androidx.annotation:annotation-experimental:1.1.0-alpha01"
+    implementation "com.squareup.okio:okio:2.9.0"
+    implementation "androidx.camera:camera-lifecycle:1.0.0-beta11"
+    implementation "androidx.localbroadcastmanager:localbroadcastmanager:1.0.0"
+    implementation "androidx.camera:camera-view:1.0.0-alpha18"
+
+    api ('com.yzy.ucrop:maven:1.0.1@aar'){transitive=true}
+
+}
+
+uploadArchives {
+    configuration = configurations.archives
+    repositories {
+        mavenDeployer {
+            repository(url: 'http://localhost:8081/repository/maven-releases/') {
+                authentication(userName: 'admin', password: 'yzy123456')
+            }
+            pom.project {
+                version '1.0.0' //版本名称
+                artifactId 'maven'  //和前面网站上填写的一样
+                groupId 'com.yzy.picture'  //和前面网站上填写的一样
+                packaging 'aar' //填写aar
+                description 'first common' //更新描述
+            }
+        }
+    }
+}
